@@ -26,6 +26,9 @@ export default function RootLayout({ children }) {
           <p><Link href="/">Logo</Link></p>
           <ul className="flex space-x-4">
             <li>
+              <Link href="/posts">Posts</Link>
+            </li>
+            <li>
               <Link href="/about">About</Link>
             </li>
             <li>

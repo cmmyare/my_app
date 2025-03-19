@@ -9,6 +9,6 @@ export const readData = async ()=>{
 }
 export const writeData = async (data)=>{
     const jsonData = JSON.stringify(data);
-    await fs.writeFile(dataFilePath, jsonData);
-    return jsonData;
+    await fs.writeFile(dataFilePath, jsonData, 'utf-8');
+    //return jsonData;
 }
