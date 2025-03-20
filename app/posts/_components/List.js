@@ -1,6 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
-const List = ({postInfo}) => {
+import DeleteButton from './DeleteButton'
+const List = async() => {
+  const post = await fetch(`http://localhost:3000/api/post`, {
+    cache: "no-store",
+  });
+  const postInfo = await post.json();
   return (
     <div className='mt-8 flow-root'>
         <div className='-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
@@ -41,6 +46,7 @@ const List = ({postInfo}) => {
         {post.body}
       </td>
       <td className="space-x-4 relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+   <DeleteButton id={post.id} />
   <Link href={`/posts/${post.id}`} className="text-indigo-600 hover:text-indigo-900">
     Edit
     <span className="sr-only">{post.name}</span>

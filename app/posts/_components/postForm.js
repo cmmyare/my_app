@@ -1,7 +1,7 @@
 "use client";
 import React from 'react'
 import {useRouter} from 'next/navigation';
-const PostForm =() => {
+const PostForm =({postInfo}) => {
  const router = useRouter();
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -12,10 +12,17 @@ const PostForm =() => {
             body: formData.get('body')
         }
         let response;
-        response = await fetch('http://localhost:3000/api/post', {
-            method: 'POST',
+        if(postInfo){
+          response = await fetch(`http://localhost:3000/api/post/${postInfo.id}`, {
+            method: 'PUT',
             body: JSON.stringify(data)
         })
+        }else{
+          response = await fetch('http://localhost:3000/api/post', {
+              method: 'POST',
+              body: JSON.stringify(data)
+          })
+        }
         if(response.ok){
             console.log('Post created successfullly');
             router.push('/posts');
@@ -36,7 +43,7 @@ const PostForm =() => {
     type="text"
     id="title"
     name="title"
-    // defaultValue={updateInfo?.title}
+     defaultValue={postInfo?.title}
     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
     required
   />
@@ -48,7 +55,7 @@ const PostForm =() => {
   <textarea
     id="body"
     name="body"
-    // defaultValue={updateInfo?.body}
+    defaultValue={postInfo?.body}
     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
     required
   />
@@ -57,8 +64,7 @@ const PostForm =() => {
   type="submit"
   className="bg-rose-500 hover:bg-rose-700 text-white font-bold px-4 rounded focus:outline-none focus:shadow-outline"
 >
-    Register
-  {/* {updateInfo ? "Update Post" : "Register"} */}
+  {postInfo ? "Update Post" : "Register"}
 </button>
 
 </form>
